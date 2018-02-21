@@ -15,10 +15,12 @@ namespace Sitecore.Support.XA.Foundation.SitecoreExtensions.Extensions
       SiteContext site = Context.Site;
       string str = (site != null) ? site.Name : string.Empty;
       string str2 = alwaysIncludeServerUrl ? WebUtil.GetServerUrl() : string.Empty;
-      if (siteInfo == null || siteInfo.Name.Equals(str, StringComparison.OrdinalIgnoreCase))
+      #region patch 11671
+      if (siteInfo == null)
       {
         return str2;
       }
+      #endregion
       string hostName = WebUtil.GetHostName();
       string[] values = new string[] { siteInfo.TargetHostName, siteInfo.IsHostNameUnique() ? siteInfo.HostName : null, hostName };
       string str4 = StringUtil.GetString(values);
